@@ -5,7 +5,7 @@
 
 /* initialization export */
 typedef int (*fn_init_t)(void);
-#if DEBUG_INIT
+#if DEBUG
 struct init_desc {
     const char *fn_name;
     const fn_init_t fn;
@@ -35,17 +35,4 @@ struct init_desc {
 
 void board_component_init(void);
 void application_component_init(void);
-
-struct module_symtab {
-    void *addr;
-    const char *name;
-};
-
-#define FUNC_EXPORT(symbol)                                                \
-    const char __msym_##symbol##_name[] SECTION(".rodata.name") = #symbol; \
-    const struct module_symtab __msym_##symbol SECTION("RTMSymTab") = {    \
-        (void *)&symbol,                                                   \
-        __msym_##symbol##_name                                             \
-    };
-
 #endif

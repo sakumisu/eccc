@@ -48,11 +48,11 @@ static int end(void)
 FUN_INIT_EXPORT(end, "6.end");
 
 /**
- * RT-Thread Components Initialization for board
+ * Components Initialization for board
  */
 void board_component_init(void)
 {
-#if RT_DEBUG_INIT
+#if DEBUG
     int result;
     const struct init_desc *desc;
     for (desc = &__init_desc_board_start; desc < &__init_desc_board_end; desc++) {
@@ -71,11 +71,11 @@ void board_component_init(void)
 }
 
 /**
- * RT-Thread Components Initialization
+ * Components Initialization
  */
 void application_component_init(void)
 {
-#if RT_DEBUG_INIT
+#if DEBUG
     int result;
     const struct init_desc *desc;
 
@@ -93,15 +93,4 @@ void application_component_init(void)
     }
     printf("all applications have done\r\n");
 #endif
-}
-
-void at_printf(const char *format, ...)
-{
-    va_list args;
-    uint32_t length;
-    static char rt_log_buf[128];
-    va_start(args, format);
-    length = vsnprintf(rt_log_buf, sizeof(rt_log_buf) - 1, (char *)format, args);
-    va_end(args);
-    //		uart_send(rt_log_buf,length);
 }
